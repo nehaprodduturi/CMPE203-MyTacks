@@ -1,15 +1,17 @@
-<!doctype html>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="utf-8">
-<title>Home</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
 </head>
 <div align="right">
-<form action="logout">
-<input type="submit" name="LOGOUT" value="LOGOUT"/>
+<form method="get" action="logout">
+<%out.println(session.getAttribute("userName")); %>
+<input type="submit" name="logout" value="LOGOUT"/>
 </form>
 </div>
-
 <body>
 <table width="200" height="255" border="5">
   <tr>
@@ -18,9 +20,11 @@
     </div></td>
   </tr>
   <tr>
-    <td><form id="form1" name="form1" method="post">
+    <td>
+   
+    <form id="form1" name="form1" method="get" action="profile">
       <div align="center">
-        <input name="PROFILE" type="submit" id="PROFILE" formaction="profile" value="PROFILE">
+    <input name="PROFILE" type="submit" id="PROFILE"  value="profile">     
       </div>
     </form></td>
   </tr>

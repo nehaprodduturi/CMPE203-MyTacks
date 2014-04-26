@@ -51,9 +51,11 @@ public class RegisterServlet extends HttpServlet {
 		//Add all the additional fields required for Registration
 		um.setUserName(request.getParameter("userName"));
 		um.setFirstName(request.getParameter("firstName"));
+		//Tag missing in Html Form
 		um.setLastName(request.getParameter("lastName"));
 		um.setPassword(request.getParameter("password"));
 		um.setEmail(request.getParameter("email"));
+		System.out.println("email Req"+request.getParameter("email"));
 		if(dbc.insertRecord(um))
 		{
 			System.out.println("Registered Successfully");

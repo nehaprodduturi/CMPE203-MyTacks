@@ -29,7 +29,7 @@ public class DBConnection {
 	}
 	public boolean insertRecord(UserModel um) {
 		boolean flag=false;
-
+		System.out.println("LastName db"+um.getLastName() );
 		BasicDBObject basicdb=new BasicDBObject("userName",um.getUserName());
 		basicdb.append("firstName", um.getFirstName());
 		basicdb.append("lastName", um.getLastName());
@@ -133,5 +133,26 @@ public class DBConnection {
 	return usr;
 
     }
+	public boolean updateUser(UserModel um) {
+		BasicDBObject newDocument = new BasicDBObject();
+		BasicDBObject updateValues=new BasicDBObject();
+		boolean flag=false;
+		try
+		{
+		updateValues.append("firstName", um.getFirstName());
+		updateValues.append("lastName", um.getLastName());
+		updateValues.append("email", um.getEmail());
+		newDocument.append("$set",updateValues);
+		BasicDBObject searchQuery = new BasicDBObject().append("userName", um.getUserName());
+		WriteResult ws=collection.update(searchQuery, newDocument);
+		System.out.println("Write"+ws);
+		flag=true;
+		}
+		catch(Exception e)
+		{
+		return false;
+		}
+		return flag;
+	}
 
 }

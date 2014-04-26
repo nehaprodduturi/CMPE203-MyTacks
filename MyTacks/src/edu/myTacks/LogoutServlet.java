@@ -32,10 +32,12 @@ public class LogoutServlet extends HttpServlet {
 		HttpSession hs=request.getSession(false);
 		if(hs!=null)
 		{
+			System.out.println("User Logged Out");
 			hs.removeAttribute("userName");
 			hs.invalidate();
+			System.out.println("User Logged Out");
 			//System.out.println("Logout Session Value"+hs.toString()+""+hs.getAttribute("userName"));
-			RequestDispatcher rd=request.getRequestDispatcher("login.html");
+			RequestDispatcher rd=request.getRequestDispatcher("index.html");
 			rd.forward(request,response);
 			
 		}
