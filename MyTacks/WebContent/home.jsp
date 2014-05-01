@@ -29,9 +29,9 @@
     </form></td>
   </tr>
   <tr>
-    <td><form id="form2" name="form2" method="post">
+    <td><form id="form2" name="form2" method="post" action="boards.html">
       <div align="center">
-        <input name="submiboardst" type="submit" id="submiboardst" formaction="boards" value="BOARDS">
+        <input name="submiboardst" type="submit" id="submiboardst" value="BOARDS">
       </div>
     </form></td>
   </tr>

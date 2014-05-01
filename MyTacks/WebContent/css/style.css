@@ -152,14 +152,14 @@ input {
 
 /*styling both submit buttons */
 #wrapper p.button input{
-	width: 30%;
+	width: 15%;
 	cursor: pointer;	
 	background: rgb(61, 157, 179);
 	padding: 8px 5px;
 	font-family: 'BebasNeueRegular','Arial Narrow',Arial,sans-serif;
 	color: #fff;
-	font-size: 24px;	
-	border: 1px solid rgb(28, 108, 122);	
+	font-size: 22px;	
+	border: 1px solid rgba(28, 108, 122, 0.1);	
 	margin-bottom: 10px;	
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
 	-webkit-border-radius: 3px;
@@ -167,13 +167,13 @@ input {
 	        border-radius: 3px;	
 	-webkit-box-shadow: 0px 1px 6px 4px rgba(0, 0, 0, 0.07) inset,
 	        0px 0px 0px 3px rgb(254, 254, 254),
-	        0px 5px 3px 3px rgb(210, 210, 210);
+	        0px 0px 0px 0px rgb(210, 210, 210);
 	   -moz-box-shadow:0px 1px 6px 4px rgba(0, 0, 0, 0.07) inset,
 	        0px 0px 0px 3px rgb(254, 254, 254),
-	        0px 5px 3px 3px rgb(210, 210, 210);
+	        0px 0px 0px 0px rgb(210, 210, 210);
 	        box-shadow:0px 1px 6px 4px rgba(0, 0, 0, 0.07) inset,
 	        0px 0px 0px 3px rgb(254, 254, 254),
-	        0px 5px 3px 3px rgb(210, 210, 210);
+	        0px 0px 0px 0px rgb(210, 210, 210);
 	-webkit-transition: all 0.2s linear;
 	   -moz-transition: all 0.2s linear;
 	     -o-transition: all 0.2s linear;
@@ -221,51 +221,22 @@ p.signin.button{
 
 p.change_link{
 	position: absolute;
-	color: rgb(127, 124, 124);
+	color: rgb(220, 220, 220);
 	left: 0px;
 	height: 20px;
 	width: 440px;
 	padding: 17px 30px 20px 30px;
 	font-size: 16px	;
 	text-align: right;
-	border-top: 1px solid rgb(219, 229, 232);
+	border-top: 1px solid rgba(219, 229, 232, 0.2);
 	-webkit-border-radius: 0 0  5px 5px;
 	   -moz-border-radius: 0 0  5px 5px;
 	        border-radius: 0 0  5px 5px;
-	background: rgb(225, 234, 235);
-	background: -moz-repeating-linear-gradient(-45deg, 
-	rgb(247, 247, 247) , 
-	rgb(247, 247, 247) 15px, 
-	rgb(225, 234, 235) 15px, 
-	rgb(225, 234, 235) 30px, 
-	rgb(247, 247, 247) 30px
-	);
-	background: -webkit-repeating-linear-gradient(-45deg, 
-	rgb(247, 247, 247) , 
-	rgb(247, 247, 247) 15px, 
-	rgb(225, 234, 235) 15px, 
-	rgb(225, 234, 235) 30px, 
-	rgb(247, 247, 247) 30px
-	);
-	background: -o-repeating-linear-gradient(-45deg, 
-	rgb(247, 247, 247) , 
-	rgb(247, 247, 247) 15px, 
-	rgb(225, 234, 235) 15px, 
-	rgb(225, 234, 235) 30px, 
-	rgb(247, 247, 247) 30px
-	);
-	background: repeating-linear-gradient(-45deg, 
-	rgb(247, 247, 247) , 
-	rgb(247, 247, 247) 15px, 
-	rgb(225, 234, 235) 15px, 
-	rgb(225, 234, 235) 30px, 
-	rgb(247, 247, 247) 30px
-	);
+
 }
 #wrapper p.change_link a {
 	display: inline-block;
 	font-weight: bold;
-	background: rgb(247, 248, 241);
 	padding: 2px 6px;
 	color: rgb(29, 162, 193);
 	margin-left: 10px;
@@ -273,7 +244,7 @@ p.change_link{
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 	border-radius: 4px;
-	border: 1px solid rgb(203, 213, 214);
+	border: 1px solid rgba(203, 213, 214, 0.0);
 	-webkit-transition: all 0.4s linear;
 	-moz-transition: all 0.4s  linear;
 	-o-transition: all 0.4s linear;
@@ -283,7 +254,7 @@ p.change_link{
 #wrapper p.change_link a:hover {
 	color: rgb(57, 191, 215);
 	background: rgb(247, 247, 247);
-	border: 1px solid rgb(74, 179, 198);
+	border: 1px solid rgba(74, 179, 198,0.2);
 }
 #wrapper p.change_link a:active{
 	position: relative;
@@ -297,7 +268,7 @@ p.change_link{
 	width: 88%;	
 	padding: 18px 6% 60px 6%;
 	margin: 0 0 35px 0;
-	background: rgb(247, 247, 247);
+	background: rgba(247, 247, 247, 0.4);
 	border: 1px solid rgba(147, 184, 189,0.8);
 	-webkit-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;
 	   -moz-box-shadow: 0pt 2px 5px rgba(105, 108, 109,  0.7),	0px 0px 8px 5px rgba(208, 223, 226, 0.4) inset;

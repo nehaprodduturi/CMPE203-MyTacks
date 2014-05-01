@@ -154,5 +154,23 @@ public class DBConnection {
 		}
 		return flag;
 	}
+	public void createBoard(BoardModel bm, String userNameSession) {
+		
+	BasicDBObject updateQuery = new BasicDBObject("userName", userNameSession);
+	    BasicDBObject updateCommand = new BasicDBObject();
+	    BasicDBObject board=new BasicDBObject();
+	    board.put("boardCategory", bm.getBoardCategory());
+	    board.put("boardName", bm.getBoardName());
+	    board.put("boardDescription", bm.getBoardDescription());
+	    board.put("boardType", bm.getBoardType());
+	   // board.put("board",board);
+	    //board.put("imageURL",imagePath);
+	    BasicDBObject boards=new BasicDBObject();
+	    boards.put("boards", board);
+	    updateCommand.put("$push",boards);   
+		WriteResult result = collection.update( updateQuery, updateCommand, true, true );
+		//return url;
+		
+	}
 
 }

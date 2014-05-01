@@ -53,12 +53,20 @@
     <servlet-name>six</servlet-name>
     <url-pattern>/edit</url-pattern>
   </servlet-mapping>
- <servlet>
+  <servlet>
     <servlet-name>seven</servlet-name>
     <servlet-class>edu.myTacks.UpdateServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>seven</servlet-name>
     <url-pattern>/update</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>eight</servlet-name>
+    <servlet-class>edu.myTacks.BoardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>eight</servlet-name>
+    <url-pattern>/board</url-pattern>
   </servlet-mapping>
 </web-app>
