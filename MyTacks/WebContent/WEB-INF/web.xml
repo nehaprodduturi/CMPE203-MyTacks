@@ -5,6 +5,7 @@
     <param-name>host</param-name>
     <param-value>localhost</param-value>
   </context-param>
+   
   <servlet>
     <servlet-name>first</servlet-name>
     <servlet-class>edu.myTacks.RegisterServlet</servlet-class>

@@ -5,11 +5,16 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Properties;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -22,6 +27,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import model.DBConnection;
+import model.TackModel;
+import model.UserModel;
 
 /**
  * Servlet implementation class TackServlet
@@ -43,24 +50,65 @@ public class TackServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		ServletContext sc=getServletContext();
+		System.out.println("The Tack!!!!");
+		DBConnection dbc=new DBConnection(sc.getInitParameter("host"));
+		HttpSession hs=request.getSession(false);	
+		BufferedInputStream bf = null;
+		BufferedOutputStream bo=null;
+		FileInputStream  f=null;
 		System.out.println("In Tack Get");
-		response.setContentType("image/jpeg");
-		ServletOutputStream out=response.getOutputStream();
-		//PrintWriter out1=response.getWriter();
-		FileInputStream f=new FileInputStream("D://tacks//Topics.png");
-		//out1.write("<img src="+"/"+"D://tacks//Topics.png"+"/"+"/>");
-		BufferedInputStream bf=new BufferedInputStream(f);
-		BufferedOutputStream bo=new BufferedOutputStream(out);
-		int c=0;
-		while((c=bf.read())!=-1)
+		//response.setContentType("image/jpeg");
+		TackModel tm=new TackModel();
+		String userName=(String)hs.getAttribute("userName");;
+		String boardName="";
+		System.out.println("userName in Tack"+userName);
+		//ServletOutputStream out = null;
+		ArrayList<TackModel> tacksList=dbc.getTackDetailsByUserAndBoard(userName,boardName);
+		System.out.println("List Values"+dbc.getTackDetailsByUserAndBoard(userName,boardName));
+		System.out.println(tacksList.size());
+		//for(TackModel tack :tacksList)
+		//out=response.getOutputStream();
+		ArrayList<String> fileNames=new ArrayList<String>();
+		for(int i=0;i<tacksList.size();i++)
 		{
-			bo.write(c);
+			System.out.println("Imagetack.getTackURL() Outside"+""+tacksList.get(i).getTackURL());
 		}
-		bf.close();
-		f.close();
-		bo.close();
-		out.close();
+		for(int i=0;i<tacksList.size();i++)
+		{
+			
+			System.out.println("Imagetack.getTackURL()"+""+tacksList.get(i).getTackURL());
+			//PrintWriter out1=response.getWriter();
+			//f=new FileInputStream(tack.getTackURL());
+		//	f=new FileInputStream(tacksList.get(i).getTackURL());
+			fileNames.add(tacksList.get(i).getTackName().toString());
+			System.out.println(tacksList.get(i).getTackURL().toString());
+			
+			//request.setAttribute("url",tacksList.get(i).getTackURL().toString());
+			//System.out.println(tacksList.get(i).getTackURL().toString().replaceAll("//", "/"));
+			//System.out.println("<img src="+"\""+tacksList.get(i).getTackURL().toString()+"\""+"/>");
+			//out1.write("<html>");
+			//out1.write("<img src="+"\"" +tacksList.get(i).getTackURL().toString()+"\""+"/>");
+			//out1.write("</html>");
+			
+			//response.sendRedirect("tacks.jsp");
+			//bf=new BufferedInputStream(f);
+			//bo=new BufferedOutputStream(out);
+			int c=0;
+			/*while((c=bf.read())!=-1)
+			{
+				bo.write(c);
+			}*/
+			
+		}
+		request.setAttribute("fileNames",fileNames);
+		RequestDispatcher rd=request.getRequestDispatcher("tacks.jsp");
+		rd.include(request, response);
+		//bf.close();
+		//f.close();
+		//bo.close();
+		//out.close();
+
 		/*	ServletContext cntx= getServletContext();
 		 * 
 	      // Get the absolute path of the image
@@ -87,8 +135,8 @@ public class TackServlet extends HttpServlet {
 	      }
 	    out.close();
 	    in.close();
-		*/
-		
+		 */
+
 	}
 
 	/**
@@ -100,13 +148,15 @@ public class TackServlet extends HttpServlet {
 		HttpSession hs=request.getSession(false);
 		System.out.println((String)hs.getAttribute("userName"));
 		String userNameSession = (String)hs.getAttribute("userName");
-		System.out.println("HS"+hs);
+		System.out.println("HS"+hs +" "+userNameSession);
 		if(hs!=null)
 		{
 			System.out.println("Entered in Tack Servlet");
 			String url=request.getParameter("iTack");
+			
 			Part filePart=request.getPart("tackImage");
 			String fileName = getFileName(filePart);
+			System.out.println("fileName"+fileName);
 			OutputStream out1 = null;
 			InputStream filecontent = null;
 			PrintWriter writer = response.getWriter();
@@ -114,25 +164,38 @@ public class TackServlet extends HttpServlet {
 			String iLabel=null;
 			try
 			{
-				String path="D://tacks";
-				System.out.println(path);
-				System.out.println(path + File.separator+ fileName);
-				out1 = new FileOutputStream(new File(path + File.separator
+				System.out.println("Request Path"+request.getServletContext().getRealPath(""));
+				//System.out.println("Absolute"+new File(sc.getRealPath("images")).getAbsolutePath());
+				//System.out.println("Cannonical"+new File(sc.getRealPath("images")).getCanonicalPath());
+				//String path=new File(sc.getRealPath("images")).getAbsolutePath()+"/";
+				/* Properties properties = System.getProperties();
+				FileReader path = new FileReader(properties.getProperty("conte") + File.separatorChar); */
+				//String path=sc.getInitParameter("path");
+				//System.out.println(sc.getRealPath("/"));
+				//System.out.println("Absolute"+new File(sc.getRealPath("images")).getAbsolutePath());
+				//String path=sc.getRealPath("/")+"img/thumb";
+				//String path="/img/thumb";
+				//String path="D://tacks";
+				//System.out.println(path);
+				//System.out.println(path + File.separator+ fileName);
+				String path=request.getServletContext().getRealPath("images");
+				out1 = new FileOutputStream(new File(path +File.separator
 						+ fileName));
 				System.out.println("out"+out1);
 				filecontent = filePart.getInputStream();
 				int read = 0;
 				final byte[] bytes = new byte[1024];
 				while ((read = filecontent.read(bytes)) != -1) {
-					System.out.println(read);
+					//System.out.println(read);
 					out1.write(bytes, 0, read);
 
 				}
 				writer.println("New file " + fileName + " created at " + path);
-				iLabel=path+"//"+fileName;
+				//iLabel=path+File.separator+fileName;
+				iLabel=path+File.separator+fileName;
 				imageFile= new File(iLabel);
-				System.out.println("URL"+url);
-						}
+				System.out.println("imageFile"+imageFile);
+			}
 			catch(Exception e)
 			{
 				writer.println("You either did not specify a file to upload or are "
@@ -144,21 +207,22 @@ public class TackServlet extends HttpServlet {
 			finally
 			{
 				if (out1 != null) {
-		            out1.close();
-		        }
-		        if (filecontent != null) {
-		            filecontent.close();
-		        }
-		        if (writer != null) {
-		            writer.close();
-		        }
+					out1.close();
+				}
+				if (filecontent != null) {
+					filecontent.close();
+				}
+				if (writer != null) {
+					writer.close();
+				}
 			}
 
 			String hostname=sc.getInitParameter("host");
 			DBConnection dbc=new DBConnection(hostname);
 			//String iLabel= "\\fileName";
+			
 			//File imageFile = new File(iLabel);
-			dbc.createTack(url,userNameSession,imageFile,iLabel);
+			dbc.createTack(url,userNameSession,fileName,iLabel);
 
 		}
 	}
@@ -166,6 +230,7 @@ public class TackServlet extends HttpServlet {
 		final String partHeader = part.getHeader("content-disposition");
 		for (String content : part.getHeader("content-disposition").split(";")) {
 			if (content.trim().startsWith("filename")) {
+System.out.println("content"+content);
 				return content.substring(
 						content.indexOf('=') + 1).trim().replace("\"", "");
 			}

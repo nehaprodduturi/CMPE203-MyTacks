@@ -36,9 +36,10 @@
     </form></td>
   </tr>
   <tr>
-    <td><form id="form3" name="form3" method="post">
+    <td><form id="form3" name="form3" method="get" action="tack">
       <div align="center">
-        <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">
+        <!--   <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">-->
+        <input name="TACKS" type="submit" id="TACKS"  value="TACKS">
       </div>
     </form></td>
   </tr>

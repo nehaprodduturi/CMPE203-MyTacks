@@ -2,6 +2,7 @@ package edu.myTacks;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,6 +57,9 @@ public class BoardServlet extends HttpServlet {
 			System.out.println("boardCategory"+ bm.getBoardCategory());
 			System.out.println("boardType"+bm.getBoardType());
 			dbc.createBoard(bm,userNameSession);
+			//RequestDispatcher rd=request.getRequestDispatcher("boards.jsp");
+			//request.setAttribute("boardName", request.getParameter("boardName"));
+			//rd.forward(request, response);
 		}
 	}
 

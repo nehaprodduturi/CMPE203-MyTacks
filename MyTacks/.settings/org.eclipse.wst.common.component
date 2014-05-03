@@ -2,6 +2,7 @@
     <wb-module deploy-name="MyTacks">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/tacks"/>
         <property name="context-root" value="MyTacks"/>
         <property name="java-output-path" value="/MyTacks/build/classes"/>
     </wb-module>
