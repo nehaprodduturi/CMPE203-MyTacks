@@ -4,6 +4,7 @@ public class TackModel {
 	private String tackName;
 	private String tackURL;
 	private String tackDescription;
+	private String boardName;
 	public String getTackName() {
 		return tackName;
 	}
@@ -21,6 +22,12 @@ public class TackModel {
 	}
 	public void setTackDescription(String tackDescription) {
 		this.tackDescription = tackDescription;
+	}
+	public String getBoardName() {
+		return boardName;
+	}
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
 	}
 	
 

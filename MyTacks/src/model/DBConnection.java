@@ -15,6 +15,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
 import com.mongodb.gridfs.GridFS;
 import com.mongodb.gridfs.GridFSInputFile;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 public class DBConnection {
 	private String host=null;
@@ -70,7 +71,7 @@ public class DBConnection {
 		}
 		return flag;
 	}
-	public String createTack(String url, String userName, String imageFile,String imagePath) throws IOException {
+	public String createTack(String url, String userName, String imageFile,String imagePath,TackModel tm) throws IOException {
 		System.out.println("in DB Tack");
 		/*BasicDBObject findQuery = new BasicDBObject("userName", userName);
 		BasicDBList db1=new BasicDBList();
@@ -78,26 +79,41 @@ public class DBConnection {
 		BasicDBObject update = new BasicDBObject();
 		update.put("$push", db1.add(new BasicDBObject("tack",url)));
 		collection.update(findQuery,update,true,true);*/
-
-		BasicDBObject updateQuery = new BasicDBObject("userName", userName);
+		DBCursor cursor;
+		String boardName= tm.getBoardName();
+		BasicDBObject updateQuery = new BasicDBObject("userName", userName).append("boards.boardName",boardName);
+		//BasicDBObject fields=new BasicDBObject("user.boards.boardName.$", 1);
 		//updateQuery.put( "userName", userName );
-		BasicDBObject updateCommand = new BasicDBObject();
-		BasicDBObject tack=new BasicDBObject();
-		tack.put("tack",imageFile);
-		tack.put("imageURL",imagePath);
-		BasicDBObject tacks=new BasicDBObject();
-		tacks.put("tacks", tack);
-		// updateCommand.put( "$push", new BasicDBObject( "tack",url ));
-		//updateCommand = new BasicDBObject();
-		updateCommand.put("$push",tacks);
+		//collection.findAndModify(updateQuery, update);
+		cursor=collection.find(updateQuery);
+		System.out.println("cursor"+cursor);
 
-		//GridFS gfs=
-		/*GridFS gfsPhoto = new GridFS(db, "photo");
-		GridFSInputFile gfsFile = gfsPhoto.createFile(imageFile);
-		gfsFile.setFilename(userName+""+url);
-		//gfsFile.save();*/
-		WriteResult result = collection.update( updateQuery, updateCommand, true, true );
-
+		try {
+			if(cursor.hasNext()) {
+				DBObject doc = cursor.next();
+				BasicDBObject updateCommand = new BasicDBObject();
+				BasicDBObject tack=new BasicDBObject();
+				tack.put("tack",imageFile);
+				tack.put("imageURL",imagePath);
+				tack.put("tackDescription", tm.getTackDescription());
+				tack.put("boardName", boardName);
+				BasicDBObject tacks=new BasicDBObject();
+				tacks.put("tacks", tack);
+				// updateCommand.put( "$push", new BasicDBObject( "tack",url ));
+				//updateCommand = new BasicDBObject();
+				updateCommand.put("$push",tacks);
+				collection.findAndModify(updateQuery, updateCommand);
+				//WriteResult result = collection.update( updateQuery, updateCommand, true, true );
+			}
+			else
+			{
+				System.out.println("No such user and board");
+			}
+		}
+		finally
+		{
+			cursor.close();
+		}
 		/*	DBCursor doc=collection.find(findQuery);
 		System.out.println("doc.getQuery()"+doc.getQuery());
 		System.out.println("document"+doc);*/
@@ -159,44 +175,68 @@ public class DBConnection {
 		BasicDBObject updateQuery = new BasicDBObject("userName", userNameSession);
 		BasicDBObject updateCommand = new BasicDBObject();
 		BasicDBObject board=new BasicDBObject();
-		board.put("boardCategory", bm.getBoardCategory());
-		board.put("boardName", bm.getBoardName());
-		board.put("boardDescription", bm.getBoardDescription());
-		board.put("boardType", bm.getBoardType());
-		// board.put("board",board);
-		//board.put("imageURL",imagePath);
-		BasicDBObject boards=new BasicDBObject();
-		boards.put("boards", board);
-		updateCommand.put("$push",boards);   
-		WriteResult result = collection.update( updateQuery, updateCommand, true, true );
-		//return url;
-
+		DBCursor docs = collection.find(updateQuery);
+		System.out.println("docs count"+(docs.count()));
+		if(docs.hasNext()) 
+		{
+			DBObject doc = docs.next();
+			board.put("boardCategory", bm.getBoardCategory());
+			board.put("boardName", bm.getBoardName());
+			board.put("boardDescription", bm.getBoardDescription());
+			board.put("boardType", bm.getBoardType());
+			// board.put("board",board);
+			//board.put("imageURL",imagePath);
+			BasicDBObject boards=new BasicDBObject();
+			boards.put("boards", board);
+			updateCommand.put("$push",boards);   
+			WriteResult result = collection.update( updateQuery, updateCommand, true, true );
+			//return url;
+		}
 	}
 	public ArrayList<TackModel> getTackDetailsByUserAndBoard(String userName, String boardName) {
 		TackModel tacks = null;
 		ArrayList<TackModel> tacksList = new ArrayList<TackModel>();
-		BasicDBObject findQuery = new BasicDBObject("userName", userName);
-		//append("boardName", boardName);
+		BasicDBObject findQuery = new BasicDBObject("userName", userName).append("tacks.boardName",boardName);
+		/*BasicDBObject findQuery=new BasicDBObject();
+		findQuery.put("userName", userName);
+		findQuery.put("boardName",boardName);*/
+		//BasicDBObject findQuery = new BasicDBObject("tacks.boardName",boardName);
+		BasicDBObject andQuery = new BasicDBObject();
+		/*ArrayList<BasicDBObject> findQuery = new ArrayList<BasicDBObject>();
+		findQuery.add(new BasicDBObject("userName", userName));
+		findQuery.add(new BasicDBObject("tacks.boardName",boardName));
+		andQuery.put("$and", andQuery);*/ 
+		
+		//
+		//BasicDBObject findQuery =new BasicDBObject("userName", userName).append("boards",new BasicDBObject("boards", new BasicDBObject("$elemMatch", new BasicDBObject("boardName", boardName)))); 
+				//new BasicDBObject("userName", userName).append("boards", new BasicDBObject("$elemMatch", new BasicDBObject("boardName", boardName)));
+		//.append("boards.boardName", boardName);
+		System.out.println("findQuery"+findQuery);
 		int counter=0;
 		DBCursor docs = collection.find(findQuery);
+		System.out.println("docs"+docs);
 		while (docs.hasNext()) 
 		{
 			DBObject doc = docs.next();
+			
 			System.out.println("doc"+doc);
 
 			BasicDBList tackListGet = (BasicDBList)doc.get("tacks");
+			
 			//usr.setId((Integer) doc.get("id"));
 			System.out.println("tackCount"+tackListGet.size());
 			for(Object tackListItem: tackListGet)
 			{
+				 
 				tacks= new TackModel();
 				BasicDBObject tackListItemObject = (BasicDBObject) tackListItem;
-				System.out.println("List Item"+tackListItemObject.getString("imageURL"));
+				if(tackListItemObject.getString("boardName").toString().equalsIgnoreCase(boardName))
+				{
 				tacks.setTackURL(tackListItemObject.getString("imageURL").toString());
+				tacks.setTackDescription(tackListItemObject.getString("tackDescription"));
 				tacks.setTackName(tackListItemObject.getString("tack").toString());
-				//System.out.println("DB Object"+tackListItemObject.getString("imageURL").toString());
-				//System.out.println("-------"+tacks.getTackURL());
 				tacksList.add(tacks);
+				}
 			}
 
 			//tacks.setTackURL(doc.get("tack").toString());
@@ -207,6 +247,34 @@ public class DBConnection {
 			//System.out.println("doc.hasNext"+counter);
 		}
 		return tacksList;
+	}
+	public ArrayList<BoardModel> getBoardsByUser(String userNameSession) {
+		ArrayList<BoardModel> boardsList = new ArrayList<BoardModel>();
+		BasicDBObject findQuery = new BasicDBObject("userName", userNameSession);
+		int counter=0;
+		BoardModel board;
+		DBCursor docs = collection.find(findQuery);
+		while (docs.hasNext()) 
+		{
+			DBObject doc = docs.next();
+			System.out.println("doc"+doc);
+
+			BasicDBList boardListGet = (BasicDBList)doc.get("boards");
+			System.out.println("boardCount"+boardListGet.size());
+			for(Object boardListItem: boardListGet)
+			{
+				board= new BoardModel();
+				BasicDBObject boardListItemObject = (BasicDBObject) boardListItem;
+				System.out.println("List Item"+boardListItemObject.getString("boardName"));
+				board.setBoardName(boardListItemObject.getString("boardName").toString());
+				board.setBoardDescription(boardListItemObject.getString("boardDescription").toString());
+				board.setBoardCategory(boardListItemObject.getString("boardCategory").toString());
+				board.setBoardType(boardListItemObject.getString("boardType"));
+				boardsList.add(board);
+			}
+
+		}
+		return boardsList;
 	}
 
 }

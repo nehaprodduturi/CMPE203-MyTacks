@@ -36,10 +36,17 @@
     </form></td>
   </tr>
   <tr>
-    <td><form id="form3" name="form3" method="get" action="tack">
+    <td><form id="form3" name="form3" method="get" action="createTack.jsp">
       <div align="center">
         <!--   <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">-->
         <input name="TACKS" type="submit" id="TACKS"  value="TACKS">
+      </div>
+    </form></td>
+  </tr>
+  <tr>
+    <td><form id="form3" name="form3" method="get" action="board">
+      <div align="center">
+        <input name="BOARDS" type="submit" id="boards"  value="VIEW BOARDS">
       </div>
     </form></td>
   </tr>
