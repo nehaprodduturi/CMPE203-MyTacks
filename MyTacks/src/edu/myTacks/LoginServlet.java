@@ -15,30 +15,26 @@ import javax.servlet.http.HttpSession;
 import model.DBConnection;
 
 /**
- * Servlet implementation class LoginServlet
+ * 
+ * Servlet implementation class Login Servlet
  * 
  */
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public LoginServlet() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * This is used for validating the userName and Password.
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -46,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 		String password=request.getParameter("password");
 		ServletContext sc=getServletContext();
 		PrintWriter out=response.getWriter();
-		//String password=request.getParameter("password");
+		
 		DBConnection dbc=new DBConnection(sc.getInitParameter("host"));
 		boolean flag=dbc.validate(userName,password);
 		if(flag)
@@ -60,7 +56,9 @@ public class LoginServlet extends HttpServlet {
 		}
 		else
 		{
-
+			RequestDispatcher rd=request.getRequestDispatcher("/invalidLogin.html");
+			rd.forward(request, response);
+			//response.sendRedirect(arg0);
 		}
 	}
 

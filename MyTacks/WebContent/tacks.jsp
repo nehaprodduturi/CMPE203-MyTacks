@@ -21,9 +21,47 @@
 	</head>
 	<div align="right">
 <form method="get" action="logout">
-<%out.println(session.getAttribute("userName")); %>
-<input type="submit" name="logout" value="LOGOUT"/>
+<h2><%out.println(session.getAttribute("userName")); %>
+<input type="submit" name="logout" value="LOGOUT"/></h2>
 </form>
+</div>
+<div align="center">
+<table width="700" height="61" border="5">
+  <tr>
+    <td width="120" height="47"><div align="center">
+    <form action="home.jsp">
+      <input name="HOME" type="submit" id="HOME"  value="HOME">
+      </form>
+    </div></td>
+  
+    <td width="120">
+   
+    <form id="form1" name="form1" method="get" action="profile">
+      <div align="center">
+    <input name="PROFILE" type="submit" id="PROFILE"  value="PROFILE">     
+      </div>
+    </form></td>
+
+    <td width="120"><form id="form2" name="form2" method="post" action="createBoards.jsp">
+      <div align="center">
+        <input name="submiboardst" type="submit" id="submiboardst" value="CREATE BOARDS">
+      </div>
+    </form></td>
+ 
+    <td width="120"><form id="form3" name="form3" method="get" action="createTack.jsp">
+      <div align="center">
+        <!--   <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">-->
+        <input name="TACKS" type="submit" id="TACKS"  value="CREATE TACK">
+      </div>
+    </form></td>
+  
+    <td width="120"><form id="form3" name="form3" method="get" action="board">
+      <div align="center">
+        <input name="BOARDS" type="submit" id="boards"  value="VIEW BOARDS">
+      </div>
+    </form></td>
+  </tr>
+</table>
 </div>
 	<body>
 	<%ServletContext sc=getServletContext();
@@ -60,7 +98,7 @@
 							<figure>
 							<img src="<%=link%>"  />
 								<!-- <img src="img/thumb/1.png" alt="img01"/> -->
-								<figcaption><h3>Letterpress asymmetrical</h3><p><%=tackDesc %></p></figcaption>
+								<figcaption><h3></h3><p><b><%=tackDesc %></b></p></figcaption>
 							</figure>
 						</li>  
                         <%} %>
@@ -75,12 +113,13 @@
 						{
                     	link=basePath+File.separator+al.get(i);
                     	String tackDesc=tmList.get(i).getTackDescription();
+                    	String tackURL=tmList.get(i).getTackURL();
 						%>
 						<li>
 							<figure>
 								<figcaption>
-									<h3>Letterpress asymmetrical</h3>
-									<p><%=tackDesc %></p>
+									<h3><%=tackDesc %> </h3>
+									<p><a href="<%=tackURL %>" ><%=tackURL %></a></p>
 								</figcaption>
 							<!-- 	<img src="img/large/1.png" alt="img01"/> -->
 									<img src="<%=link%>"  />

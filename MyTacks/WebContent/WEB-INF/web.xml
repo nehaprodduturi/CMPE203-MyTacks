@@ -5,7 +5,6 @@
     <param-name>host</param-name>
     <param-value>localhost</param-value>
   </context-param>
-   
   <servlet>
     <servlet-name>first</servlet-name>
     <servlet-class>edu.myTacks.RegisterServlet</servlet-class>
@@ -62,7 +61,7 @@
     <servlet-name>seven</servlet-name>
     <url-pattern>/update</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>eight</servlet-name>
     <servlet-class>edu.myTacks.BoardServlet</servlet-class>
   </servlet>
@@ -70,4 +69,37 @@
     <servlet-name>eight</servlet-name>
     <url-pattern>/board</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>nine</servlet-name>
+    <servlet-class>edu.myTacks.PublicBoardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>nine</servlet-name>
+    <url-pattern>/publicBoard</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ten</servlet-name>
+    <servlet-class>edu.myTacks.PublicTackServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ten</servlet-name>
+    <url-pattern>/publicTack</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>eleven</servlet-name>
+    <servlet-class>edu.myTacks.PrivateBoardServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>eleven</servlet-name>
+    <url-pattern>/privateBoard</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>twelve</servlet-name>
+    <servlet-class>edu.myTacks.FavoriteServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>twelve</servlet-name>
+    <url-pattern>/favorite</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

@@ -5,22 +5,63 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Updated Profile</title>
 </head>
-<body>
+<div align="right">
+<form method="get" action="logout">
+<h3><%out.println(session.getAttribute("userName")); %>
+<input type="submit" name="logout" value="LOGOUT"/></h3>
+</form>
+</div>
+<div align="center">
+<table width="700" height="61" border="5">
+  <tr>
+    <td width="120" height="47"><div align="center">
+    <form action="home.jsp">
+      <input name="HOME" type="submit" id="HOME"  value="HOME">
+      </form>
+    </div></td>
+  
+    <td width="120">
+   
+    <form id="form1" name="form1" method="get" action="profile">
+      <div align="center">
+    <input name="PROFILE" type="submit" id="PROFILE"  value="PROFILE">     
+      </div>
+    </form></td>
+
+    <td width="120"><form id="form2" name="form2" method="post" action="createBoards.jsp">
+      <div align="center">
+        <input name="submiboardst" type="submit" id="submiboardst" value="CREATE BOARDS">
+      </div>
+    </form></td>
+ 
+    <td width="120"><form id="form3" name="form3" method="get" action="createTack.jsp">
+      <div align="center">
+        <!--   <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">-->
+        <input name="TACKS" type="submit" id="TACKS"  value="CREATE TACK">
+      </div>
+    </form></td>
+  
+    <td width="120"><form id="form3" name="form3" method="get" action="board">
+      <div align="center">
+        <input name="BOARDS" type="submit" id="boards"  value="VIEW BOARDS">
+      </div>
+    </form></td>
+  </tr>
+</table>
+</div>
+
 <%UserModel um=new UserModel();
 um=(UserModel)request.getAttribute("user");
 //out.println(um.getFirstName()); 
 %>
 
-<div align="right">
-<form method="get" action="logout">
-<%out.println(session.getAttribute("userName")); %>
-<input type="submit" name="logout" value="LOGOUT"/>
-</form>
-</div>
-<body>
-<table border="2">
+<br/>
+
+<body background="images/bg1.png">
+<h2>
+<table border="2" align="center">
 <tr>
 <td>User Name:</td>
 
@@ -43,6 +84,6 @@ um=(UserModel)request.getAttribute("user");
 <td><%out.println(um.getEmail());%></td>
 </tr>
 </table>
-
+</h2>
 </body>
 </html>

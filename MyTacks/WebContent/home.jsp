@@ -4,52 +4,67 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Home</title>
+<link href="jQueryAssets/jquery.ui.core.min.css" rel="stylesheet" type="text/css">
+<link href="jQueryAssets/jquery.ui.theme.min.css" rel="stylesheet" type="text/css">
+<script src="jQueryAssets/jquery-1.8.3.min.js" type="text/javascript"></script>
 </head>
 <div align="right">
 <form method="get" action="logout">
-<%out.println(session.getAttribute("userName")); %>
-<input type="submit" name="logout" value="LOGOUT"/>
+<h3><%out.println(session.getAttribute("userName")); %>
+<input type="submit" name="logout" value="LOGOUT"/></h3>
 </form>
 </div>
-<body>
-<table width="200" height="255" border="5">
+<body  background="images/bg1.png">
+<div align="center">
+<table width="700" height="61" border="5">
   <tr>
-    <td><div align="center">
-      <input name="HOME" type="submit" id="HOME" formaction="home.html" value="HOME">
+    <td width="120" height="47"><div align="center">
+    <form action="home.jsp">
+      <input name="HOME" type="submit" id="HOME"  value="HOME">
+      </form>
     </div></td>
-  </tr>
-  <tr>
-    <td>
+  
+    <td width="120">
    
     <form id="form1" name="form1" method="get" action="profile">
       <div align="center">
-    <input name="PROFILE" type="submit" id="PROFILE"  value="profile">     
+    <input name="PROFILE" type="submit" id="PROFILE"  value="PROFILE">     
       </div>
     </form></td>
-  </tr>
-  <tr>
-    <td><form id="form2" name="form2" method="post" action="boards.html">
+
+    <td width="120"><form id="form2" name="form2" method="post" action="createBoards.jsp">
       <div align="center">
-        <input name="submiboardst" type="submit" id="submiboardst" value="BOARDS">
+        <input name="submiboardst" type="submit" id="submiboardst" value="CREATE BOARDS">
       </div>
     </form></td>
-  </tr>
-  <tr>
-    <td><form id="form3" name="form3" method="get" action="createTack.jsp">
+ 
+    <td width="120"><form id="form3" name="form3" method="get" action="createTack.jsp">
       <div align="center">
         <!--   <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">-->
-        <input name="TACKS" type="submit" id="TACKS"  value="TACKS">
+        <input name="TACKS" type="submit" id="TACKS"  value="CREATE TACK">
       </div>
     </form></td>
-  </tr>
-  <tr>
-    <td><form id="form3" name="form3" method="get" action="board">
+  
+    <td width="120"><form id="form3" name="form3" method="get" action="board">
       <div align="center">
         <input name="BOARDS" type="submit" id="boards"  value="VIEW BOARDS">
       </div>
     </form></td>
   </tr>
 </table>
+</div>
+<div align="center">
+<hr/>
+<marquee  truespeed><h2><b ice:repeating="true">
+
+					<h1>MyTacks.com!!!!</h1>
+</b></h2></marquee>
+
+<hr/>
+<br/>
+<br/>
+<img src="images/Capture.PNG" width="132" height="162" alt=""/>
+</div>
 </body>
 </html>

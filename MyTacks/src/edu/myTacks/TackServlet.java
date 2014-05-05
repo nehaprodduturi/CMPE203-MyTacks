@@ -54,85 +54,31 @@ public class TackServlet extends HttpServlet {
 		System.out.println("The Tack!!!!");
 		DBConnection dbc=new DBConnection(sc.getInitParameter("host"));
 		HttpSession hs=request.getSession(false);	
-		BufferedInputStream bf = null;
-		BufferedOutputStream bo=null;
-		FileInputStream  f=null;
 		System.out.println("In Tack Get");
-		//response.setContentType("image/jpeg");
 		TackModel tm=new TackModel();
 		String userName=(String)hs.getAttribute("userName");
 		String boardName=(String)request.getParameter("boardName");
 		System.out.println("userName in Tack"+userName+"board"+boardName);
-		//ServletOutputStream out = null;
+		if(boardName!=null)
+		{
 		ArrayList<TackModel> tacksList=dbc.getTackDetailsByUserAndBoard(userName,boardName);
-		//System.out.println("List Values"+dbc.getTackDetailsByUserAndBoard(userName,boardName));
-		//System.out.println(tacksList.size());
-		//for(TackModel tack :tacksList)
-		//out=response.getOutputStream();
 		ArrayList<String> fileNames=new ArrayList<String>();
 		for(int i=0;i<tacksList.size();i++)
 		{
-
-			//System.out.println("Imagetack.getTackURL()"+""+tacksList.get(i).getTackURL());
-			//PrintWriter out1=response.getWriter();
-			//f=new FileInputStream(tack.getTackURL());
-			//	f=new FileInputStream(tacksList.get(i).getTackURL());
 			fileNames.add(tacksList.get(i).getTackName().toString());
 			System.out.println(tacksList.get(i).getTackURL().toString());
-
-			//request.setAttribute("url",tacksList.get(i).getTackURL().toString());
-			//System.out.println(tacksList.get(i).getTackURL().toString().replaceAll("//", "/"));
-			//System.out.println("<img src="+"\""+tacksList.get(i).getTackURL().toString()+"\""+"/>");
-			//out1.write("<html>");
-			//out1.write("<img src="+"\"" +tacksList.get(i).getTackURL().toString()+"\""+"/>");
-			//out1.write("</html>");
-
-			//response.sendRedirect("tacks.jsp");
-			//bf=new BufferedInputStream(f);
-			//bo=new BufferedOutputStream(out);
-			int c=0;
-			/*while((c=bf.read())!=-1)
-			{
-				bo.write(c);
-			}*/
-
 		}
 		request.setAttribute("fileNames",fileNames);
 		request.setAttribute("tacksList",tacksList);
 		RequestDispatcher rd=request.getRequestDispatcher("tacks.jsp");
 		rd.include(request, response);
-		//bf.close();
-		//f.close();
-		//bo.close();
-		//out.close();
-
-		/*	ServletContext cntx= getServletContext();
-		 * 
-	      // Get the absolute path of the image
-			//String path =
-	      String filename = cntx.getRealPath("D://tacks//Topics.png");
-	      String mime = cntx.getMimeType(filename);
-	      if (mime == null) {
-	        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	        return;
-	      }
-
-	      response.setContentType(mime);
-	      File file = new File(filename);
-	      response.setContentLength((int)file.length());
-
-	      FileInputStream in = new FileInputStream(file);
-	      OutputStream out = response.getOutputStream();
-
-	      // Copy the contents of the file to the output stream
-	       byte[] buf = new byte[1024];
-	       int count = 0;
-	       while ((count = in.read(buf)) >= 0) {
-	         out.write(buf, 0, count);
-	      }
-	    out.close();
-	    in.close();
-		 */
+		}
+		else
+		{
+			RequestDispatcher rd=request.getRequestDispatcher("error.jsp");
+			rd.include(request, response);
+		}
+	
 
 	}
 
@@ -153,9 +99,7 @@ public class TackServlet extends HttpServlet {
 			String url=request.getParameter("iTack");
 			tm.setTackURL(url);
 			tm.setTackDescription(request.getParameter("tackDescription"));
-			String boardName1=(String)request.getParameter("boardName");
-			System.out.println("boardName1"+boardName1);
-			String boardName=boardName1;
+			String boardName=(String)request.getParameter("boardName");
 			System.out.println("Entered in Tack Servlet");
 			Part filePart=request.getPart("tackImage");
 			String fileName = getFileName(filePart);
@@ -211,7 +155,7 @@ public class TackServlet extends HttpServlet {
 			//String iLabel= "\\fileName";
 
 			//Calls createTack Method with all parameters
-			dbc.createTack(url,userNameSession,fileName,iLabel,tm);
+			dbc.createTack(userNameSession,fileName,iLabel,tm);
 
 			ArrayList<TackModel> tacksList=dbc.getTackDetailsByUserAndBoard(userNameSession,boardName);
 			ArrayList<String> fileNames=new ArrayList<String>();

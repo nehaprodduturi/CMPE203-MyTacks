@@ -11,47 +11,40 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.BoardModel;
 import model.DBConnection;
 import model.UserModel;
 
 /**
- * Servlet implementation class RegisterServlet
- * This Servlet is used for registering a user 
+ * Author:Team Crusaders
+ * This Servlet is used for registering a user
  */
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public RegisterServlet() {
+		public RegisterServlet() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * The below post method accepts the parameters from the form and pushes the details to Model
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ServletContext sc=getServletContext();
-		
-		PrintWriter out= response.getWriter();
 		String hostname=sc.getInitParameter("host");
 		DBConnection dbc=new DBConnection(hostname);
 		UserModel um=new UserModel();
-		response.setContentType("text/html");
-		//Add all the additional fields required for Registration
+		/*The below lines of code takes the user details and assigns them to UserModel which is
+		an OOP Feature*/
 		um.setUserName(request.getParameter("userName"));
 		um.setFirstName(request.getParameter("firstName"));
-		//Tag missing in Html Form
 		um.setLastName(request.getParameter("lastName"));
 		um.setPassword(request.getParameter("password"));
 		um.setEmail(request.getParameter("email"));
@@ -59,12 +52,21 @@ public class RegisterServlet extends HttpServlet {
 		if(dbc.insertRecord(um))
 		{
 			System.out.println("Registered Successfully");
+			BoardModel bm=new BoardModel();
+			bm.setBoardName("favorite");
+			bm.setBoardDescription("This is a favorite Board!!");
+			bm.setBoardCategory("favorite");
+			bm.setBoardType("favorite");
+			dbc.createBoard(bm,um.getUserName());
 			RequestDispatcher rd1=request.getRequestDispatcher("/home.html");
 			rd1.include(request, response);	
 		}
-		//String host=sc.getInitParameter("host");
-		//um.establishConnection(host,um.getUserName());
-		
+		else
+		{
+			System.out.println("Invalid");
+			RequestDispatcher rd=request.getRequestDispatcher("/invalidRegistration.html");
+			rd.forward(request, response);
+		}
 		
 	}
 

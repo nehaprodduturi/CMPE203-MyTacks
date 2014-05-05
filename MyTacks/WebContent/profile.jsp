@@ -12,11 +12,52 @@
 </head>
 <div align="right">
 <form method="get" action="logout">
-<%out.println(session.getAttribute("userName")); %>
-<input type="submit" name="logout" value="LOGOUT"/>
+<h3><%out.println(session.getAttribute("userName")); %>
+<input type="submit" name="logout" value="LOGOUT"/></h3>
 </form>
 </div>
-<body>
+<body background="images/bg2.jpg">
+<div align="center">
+<table width="700" height="61" border="5">
+  <tr>
+    <td width="120" height="47"><div align="center">
+    <form action="home.jsp">
+      <input name="HOME" type="submit" id="HOME"  value="HOME">
+    </form>
+    </div></td>
+  
+    <td width="120">
+   
+    <form id="form1" name="form1" method="get" action="profile">
+      <div align="center">
+    <input name="PROFILE" type="submit" id="PROFILE"  value="PROFILE">     
+      </div>
+    </form></td>
+
+    <td width="120"><form id="form2" name="form2" method="post" action="createBoards.jsp">
+      <div align="center">
+        <input name="submiboardst" type="submit" id="submiboardst" value="CREATE BOARDS">
+      </div>
+    </form></td>
+ 
+    <td width="120"><form id="form3" name="form3" method="get" action="createTack.jsp">
+      <div align="center">
+        <!--   <input name="TACKS" type="submit" id="TACKS" formaction="tacks" value="TACKS">-->
+        <input name="TACKS" type="submit" id="TACKS"  value="CREATE TACK">
+      </div>
+    </form></td>
+  
+    <td width="120"><form id="form3" name="form3" method="get" action="board">
+      <div align="center">
+        <input name="BOARDS" type="submit" id="boards"  value="VIEW BOARDS">
+      </div>
+    </form></td>
+  </tr>
+</table>
+</div>
+<br/>
+<div align="center">
+<h3>
 <table border="2">
 <tr>
 <td>User Name:</td>
@@ -40,6 +81,7 @@
 <td><%out.println(request.getAttribute("email"));%></td>
 </tr>
 </table>
+</h3>
 </body>
 <form method="post" action="edit">
 <input type="hidden" name="userName" value="${userName}"/>
@@ -48,4 +90,5 @@
 <input type="hidden" name="email" value="${email}"/>
 <input type="submit" value="EditProfile">
 </form>
+</div>
 </html>
